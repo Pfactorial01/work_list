@@ -27,6 +27,12 @@ flask run
  - To create task,
  Send POST request with body { "task_name": "write edge cases", "description": "checkout code base" } to localhost:PORT/tasks
  
+ - To get all tasks,
+ Send GET request to localhost:PORT/tasks
+  
+ - To get one task,
+Send GET request to localhost:PORT/task/task_id
+ 
  - To delete a task,
  Send DELETE request to localhost:PORT/task/task_id
  
