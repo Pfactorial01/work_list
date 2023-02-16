@@ -24,5 +24,10 @@ flask run
  ```
  
  ### API USAGE
- - To create task
- Send POST request with body { "task_name
+ - To create task,
+ Send POST request with body { "task_name": "write edge cases", "description": "checkout code base" } to localhost:PORT/tasks
+ - To delete a task,
+ Send DELETE request to localhost:PORT/task/task_id
+ - To update a task,
+ Send PUT request with body { "task_name": "write edge cases", "description": "checkout code base" } to localhost:PORT/task/task_id
+ 
