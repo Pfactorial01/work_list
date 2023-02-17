@@ -110,18 +110,30 @@ class Single_Task(Resource):
         return jsonify({"message": "task deleted succesfully"})
 
     def patch(self, task_id):
-        """mark task as completed resource"""
+        """mark task as completed or uncompleted resource"""
+        data = request.get_json(silent=True)
+        if not data:
+            return make_response(
+                {"message": "Task details required, JSON content not detected"}, 400
+            )
         try:
             task = tasks.find_one({"_id": ObjectId(task_id)})
         except:
             return jsonify({"message": "invalid task_id"})
         if not task:
             return make_response({"message": "Task not found"}, 404)
-        tasks.find_one_and_update(
-            {"_id": ObjectId(task_id)},
-            {"$set": {"status": "completed"}},
-        )
-        return jsonify({"message": "task marked as completed"})
+        if data.get("status") == "completed":
+            tasks.find_one_and_update(
+                {"_id": ObjectId(task_id)},
+                {"$set": {"status": "completed"}},
+            )
+            return jsonify({"message": "task marked as completed"})
+        if data.get("status") == "uncompleted":
+            tasks.find_one_and_update(
+                {"_id": ObjectId(task_id)},
+                {"$set": {"status": "uncompleted"}},
+            )
+            return jsonify({"message": "task marked as uncompleted"})
 
 
 api.add_resource(Single_Task, "/task/<string:task_id>")
